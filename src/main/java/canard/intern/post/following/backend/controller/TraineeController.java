@@ -53,7 +53,8 @@ public class TraineeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TraineeDto create(@Valid @RequestBody TraineeDto traineeDto) {
-        return null;
+
+        return traineeService.create(traineeDto);
     }
 
     @PutMapping("/{id}")
@@ -67,15 +68,19 @@ public class TraineeController {
                             id, traineeDto.getId()));
             // NB:you can use also:  MessageFormat.format or StringBuilder
         }
-        //ouioui
-        traineeDto.setId(id);
-        return traineeDto;
+        var updatedTrainnee=traineeService.update(id,traineeDto);
+        if (updatedTrainnee.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("No trainee found with id <%d>", id));
+
+        return updatedTrainnee.get();
     }
 
     //NB: other choice, return Dto removed if found
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id){
-        // TODO: remove Trainee with this id
+        var deleted = traineeService.delete(id);
+        if(!deleted) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("No trainee found with id <%d>", id));
     }
 }
