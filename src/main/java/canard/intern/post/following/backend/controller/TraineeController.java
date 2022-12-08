@@ -67,6 +67,7 @@ public class TraineeController {
                             id, traineeDto.getId()));
             // NB:you can use also:  MessageFormat.format or StringBuilder
         }
+        //ouioui
         traineeDto.setId(id);
         return traineeDto;
     }
