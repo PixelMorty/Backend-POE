@@ -53,7 +53,6 @@ public class TraineeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TraineeDto create(@Valid @RequestBody TraineeDto traineeDto) {
-
         return traineeService.create(traineeDto);
     }
 
