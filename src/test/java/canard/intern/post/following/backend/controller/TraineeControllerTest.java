@@ -66,7 +66,7 @@ class TraineeControllerTest {
                         .lastname("Neymar")
                         .firstname("Jean")
                         .gender(Gender.X)
-                        .birthdate(LocalDate.of(1999,1,14))
+                        .birthdate(LocalDate.of(1999, 1, 14))
                         .build(),
                 TraineeDto.builder()
                         .id(3)
@@ -86,6 +86,7 @@ class TraineeControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(traineesDtoResponse.size())));
     }
+
 
     @Test
     void getByLastname_OK_FoundSeveral() throws Exception {
