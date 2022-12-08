@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/trainees")
@@ -48,6 +49,13 @@ public class TraineeController {
                     String.format("No trainee found with id <%d>", id));
         }
         return optTraineeDto.get();
+    }
+
+    @GetMapping("/search/byLastname")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<TraineeDto> getByLastName(@RequestParam String ln){
+        var setTraineeDto =  traineeService.getByLastnameContaining(ln);
+        return setTraineeDto;
     }
 
     @PostMapping
