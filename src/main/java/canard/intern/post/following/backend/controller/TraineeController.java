@@ -72,11 +72,15 @@ public class TraineeController {
                             id, traineeDto.getId()));
             // NB:you can use also:  MessageFormat.format or StringBuilder
         }
-        var updatedTrainnee=traineeService.update(id,traineeDto);
-        if (updatedTrainnee.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("No trainee found with id <%d>", id));
+//        var updatedTrainnee=traineeService.update(id,traineeDto);
+//        if (updatedTrainnee.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+//                String.format("No trainee found with id <%d>", id));
+//
+//        return updatedTrainnee.get();
+        //Meilleire façon, avec les optionals
+        return traineeService.update(id,traineeDto).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("No trainee found with id <%d>", id)));
 
-        return updatedTrainnee.get();
     }
 
     //NB: other choice, return Dto removed if found
