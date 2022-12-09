@@ -28,9 +28,7 @@ public class TraineeController {
      * @return all trainees
      */
     @GetMapping
-    public List<TraineeDto> getAll(){
-       return traineeService.getAll();
-    }
+    public List<TraineeDto> getAll(){return traineeService.getAll();}
 
     /**
      * GET /api/trainees/{id}
@@ -53,9 +51,8 @@ public class TraineeController {
 
     @GetMapping("/search/byLastname")
     @ResponseStatus(HttpStatus.OK)
-    public Set<TraineeDto> getByLastName(@RequestParam String ln){
-        var setTraineeDto =  traineeService.getByLastnameContaining(ln);
-        return setTraineeDto;
+    public Set<TraineeDto> getByLastName(@RequestParam("ln") String lastname){
+        return traineeService.getByLastnameContaining(lastname);
     }
 
     @PostMapping
