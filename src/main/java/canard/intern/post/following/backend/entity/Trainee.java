@@ -6,6 +6,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 
@@ -25,7 +26,7 @@ public class Trainee {
     @Column(length=50, name = "lastname",nullable = false) // personnalisation de ce que ça va donner en longeur et le nom par exemple
     private String lastname;
 
-    @Column(length=50, name = "firstname",nullable = false)
+    @Column(length=50, name = "firstname",nullable = false )
     private String firstname;
 
     @Enumerated(EnumType.STRING)
