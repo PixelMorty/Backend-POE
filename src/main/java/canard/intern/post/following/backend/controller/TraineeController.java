@@ -20,6 +20,7 @@ import java.util.Set;
 @RequestMapping("/api/trainees")
 public class TraineeController {
 
+
     @Autowired
     private TraineeService traineeService;
 
