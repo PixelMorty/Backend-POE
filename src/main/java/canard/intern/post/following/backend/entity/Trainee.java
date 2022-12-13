@@ -2,15 +2,21 @@ package canard.intern.post.following.backend.entity;
 
 
 import canard.intern.post.following.backend.enums.Gender;
+import lombok.*;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
+@ToString
+@Table(name="trainees")// personnaliser  le nom de la table
 public class Trainee {
     @Id      // indiquer que c'est la clé primaire (ID, prendre le bon (javax.persistence,jpa)
     @GeneratedValue(strategy = GenerationType.IDENTITY) // affiner la stratégie d'initiation de la clé primaire
