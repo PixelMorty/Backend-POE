@@ -22,15 +22,22 @@ public class Trainee {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // affiner la stratégie d'initiation de la clé primaire
     private Integer id;
 
+    @Column(length=50, name = "lastname",nullable = false) // personnalisation de ce que ça va donner en longeur et le nom par exemple
     private String lastname;
 
+    @Column(length=50, name = "firstname",nullable = false)
     private String firstname;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length=1)
     private Gender gender;
 
+    @Column(nullable = false)
     private LocalDate birthdate;
 
+    @Column(length=15)
     private String phoneNumber;
 
+    @Column(nullable = false,length=100,unique = true)
     private String email;
 }

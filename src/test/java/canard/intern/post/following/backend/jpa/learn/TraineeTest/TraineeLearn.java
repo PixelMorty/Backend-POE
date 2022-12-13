@@ -17,7 +17,7 @@ class TraineeLearn {
     EntityManager entityManager;
 
     @Test
-    void save(){
+    void saveAndRead(){
         Trainee trainee =Trainee.builder()
                 .lastname("Bond")
                 .firstname("Jane")
@@ -28,7 +28,16 @@ class TraineeLearn {
                 .build()
                 ;
         entityManager.persist(trainee); // génère un insert
-        //System.out.println(trainee.toString());
+        entityManager.flush();// forcer une SYNCRHO  pour être sûr que l'id a été généré avant de le récup
+        System.out.println(trainee);
+        var idGenerated = trainee.getId();
+
+
+        entityManager.clear(); // faire perdre la mémoire à hibernate
+        var traineeRead = entityManager.find(Trainee.class,idGenerated);
+        System.out.println(traineeRead);
+
+
     }
 
 
