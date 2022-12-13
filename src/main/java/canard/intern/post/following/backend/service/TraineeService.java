@@ -12,6 +12,7 @@ public interface TraineeService {
      * get all trainees
      * @return trainees
      */
+
     List<TraineeDto> getAll();
 
     /**
