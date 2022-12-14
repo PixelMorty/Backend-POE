@@ -59,7 +59,13 @@ public class TraineeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TraineeDto create(@Valid @RequestBody TraineeDto traineeDto) {
-        return traineeService.create(traineeDto);
+//        try{
+            return traineeService.create(traineeDto);
+//        }catch(Exception e){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+//                    "duplicate mail");
+//        }
+
     }
 
     @PutMapping("/{id}")
