@@ -1,6 +1,5 @@
 package canard.intern.post.following.backend.dto;
 
-import canard.intern.post.following.backend.entity.Trainee;
 import canard.intern.post.following.backend.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

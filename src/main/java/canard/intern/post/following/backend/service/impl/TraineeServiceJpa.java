@@ -7,9 +7,7 @@ import canard.intern.post.following.backend.repository.TraineeRepository;
 import canard.intern.post.following.backend.service.TraineeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.Optional;
