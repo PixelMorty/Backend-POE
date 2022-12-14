@@ -28,6 +28,7 @@ class TraineeRepositoryTest {
     //EntityManager entityManager;
     @Autowired
     TestEntityManager testEntityManager; //usefull wrapper manager only for test, vérifie les trucs dans la db
+                                        // pour ne pas faire appel au traineeRepository pour poser quand c'est pas ça qu'on teste
 
 
     //@Rollback(value = false)

@@ -1,5 +1,6 @@
 package canard.intern.post.following.backend.dto;
 
+import canard.intern.post.following.backend.entity.Trainee;
 import canard.intern.post.following.backend.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -33,4 +34,6 @@ public class TraineeDto {
     @NotNull
     @Email // or @Pattern
     private String email;
+
+
 }

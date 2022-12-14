@@ -17,31 +17,47 @@ public class TraineeServiceJpa implements TraineeService {
     TraineeRepository traineeRepository;
     @Override
     public List<TraineeDto> getAll() {
-        return null ;//traineeRepository.findAll();  // TODO convert en TraineeDto
+        return traineeRepository.findAll().stream().map(
+                (t)->TraineeDto.builder()
+                        .id(t.getId())
+                        .lastname(t.getLastname())
+                        .email(t.getEmail())
+                        .firstname(t.getFirstname())
+                        .gender(t.getGender())
+                        .birthdate(t.getBirthdate())
+                        .phoneNumber(t.getPhoneNumber())
+                        .build()
+
+        ).toList();
     }
 
     @Override
     public Optional<TraineeDto> getById(int id) {
+        // TODO
         return Optional.empty();
     }
 
     @Override
     public Set<TraineeDto> getByLastnameContaining(String lastnamePartial) {
+        // TODO
         return null;
     }
 
     @Override
     public TraineeDto create(TraineeDto traineeDto) {
+        // TODO
         return null;
     }
 
     @Override
     public Optional<TraineeDto> update(int id, TraineeDto traineeDto) {
+        // TODO
         return Optional.empty();
     }
 
     @Override
     public boolean delete(int id) {
+        // TODO
         return false;
     }
 }
