@@ -92,6 +92,7 @@ private static void displayArray(Collection<?> collection){
         poes.forEach((t)->System.out.println("\t- "+t));
     }
 
+
     @Test
     void poesSorted() {
         var poesSortedByDateDesc = poeRepository.findAll(
@@ -106,5 +107,14 @@ private static void displayArray(Collection<?> collection){
         );
         displayArray(poesSortedByTitleDate);
 
+    }
+
+    @Test
+    void poesCount(){
+        System.out.println(poeRepository.countByPoeType());
+    }
+    @Test
+    void poesCount2(){
+        poeRepository.countByPoeType2().forEach((c)-> System.out.println(c.getPoeTye()+ " " +c.getCountPoe()));
     }
 }
