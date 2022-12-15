@@ -1,6 +1,8 @@
-package canard.intern.post.following.backend.repository;
+package canard.intern.post.following.backend.repository.play;
 
 import canard.intern.post.following.backend.entity.Trainee;
+import canard.intern.post.following.backend.repository.PoeRepository;
+import canard.intern.post.following.backend.repository.TraineeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -35,6 +37,7 @@ class TraineeRepositoryAssociationTest {
         System.out.println(poe);
     }
 
+    // sol 1 (intermédiaire)
     @Test
     void poeWithTraineeHibernate() {
 
@@ -43,7 +46,7 @@ class TraineeRepositoryAssociationTest {
         System.out.println(poe);
 
         // SQL: select * from trainees where poe_id = 2;
-        // sol 1 (intermédiaire)
+
         // SQL => HQL/JPQL
         var sql = "select t from Trainee t  where t.poe.id = ?1";   // nom de la classe au lieu du nom de la table, t au lieu de *, t.poe.id au lieu de t.poe_id
         var trainees = entityManager.createQuery(sql, Trainee.class)
@@ -55,7 +58,14 @@ class TraineeRepositoryAssociationTest {
         }
         //OU
         trainees.forEach((t)->System.out.println("\t- "+t));
-       // sol 2 (finale) requette sur trainee
 
+
+    }
+    // sol 2 (finale) requette sur trainee
+    @Test
+    void poeWithTraineesWithJpaRepository(){
+        int idPoe = 6;
+        var trainees =          traineeRepository.findByPoeId(idPoe);
+        trainees.forEach((t)->System.out.println("\t- "+t));
     }
 }

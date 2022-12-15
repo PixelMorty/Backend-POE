@@ -1,6 +1,7 @@
 package canard.intern.post.following.backend.entity;
 
 
+import canard.intern.post.following.backend.enums.PoeType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,9 +26,11 @@ import java.util.Set;
         @Column(length = 150, nullable = false)
         private String title;
 
-        @Column(name = "poe_type", length = 10, nullable = false)
- //       @Enumerated(EnumType.STRING)
+      @Column(name = "poe_type", length = 10, nullable = false)
+       // @Enumerated(EnumType.STRING)
+       // @Column(name = "poe_type",length=10)
         private String poeType;
+   //     private PoeType poeType;
 
         @Column(name = "begin_date",nullable = false)
         private LocalDate beginDate;
