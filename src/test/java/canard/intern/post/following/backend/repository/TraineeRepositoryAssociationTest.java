@@ -55,6 +55,7 @@ class TraineeRepositoryAssociationTest {
         }
         //OU
         trainees.forEach((t)->System.out.println("\t- "+t));
+       // sol 2 (finale) requette sur trainee
 
     }
 }
