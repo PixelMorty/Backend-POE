@@ -5,9 +5,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 
-    @ToString
+@ToString
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -25,6 +26,7 @@ import java.time.LocalDate;
         private String title;
 
         @Column(name = "poe_type", length = 10, nullable = false)
+ //       @Enumerated(EnumType.STRING)
         private String poeType;
 
         @Column(name = "begin_date",nullable = false)
@@ -32,5 +34,8 @@ import java.time.LocalDate;
 
         @Column(name = "end_date",nullable = false)
         private LocalDate endDate;
+// @OneToMany
+ //       private Set<Trainee> trainees;
+
     }
 

@@ -41,4 +41,10 @@ public class Trainee {
 
     @Column(nullable = false,length=100,unique = true)
     private String email;
+
+   @Transient // t'occupe pas de cette colonne dans la base de donnée (pour quand on a pas encore tout branché)
+   @ManyToOne  // indiquer   il sera lié à des poes qui eux auront plusieurs stagiaires  ;exprime dejà le nullable
+  // @JoinColumn(name = "id_poe")// pour tuner : nom de colonne particulière
+    private Poe poe;
+
 }
