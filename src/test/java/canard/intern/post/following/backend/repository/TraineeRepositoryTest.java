@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@ActiveProfiles("testu")
+@ActiveProfiles(value = "testu")  // utilise les properties dans application-testu.properties pour les tests d'en dessous.
 class TraineeRepositoryTest {
 
     @Autowired
@@ -29,6 +29,7 @@ class TraineeRepositoryTest {
   //  @Autowired
     //EntityManager entityManager;
     @Autowired
+
     TestEntityManager testEntityManager; //usefull wrapper manager only for test, vérifie les trucs dans la db
                                         // pour ne pas faire appel au traineeRepository pour poser quand c'est pas ça qu'on teste
 
