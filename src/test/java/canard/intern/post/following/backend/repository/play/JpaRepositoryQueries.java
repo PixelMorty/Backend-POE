@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -35,10 +36,10 @@ private static void displayArray(Collection<?> collection){
     @Test
     void poesByTitleIgnoreCase() {
         String title = "Consultant Devops";
-
+        var trainees = poeRepository.findByTitleIgnoreCaseOrderByBeginDate(title);
         // le mauvais: renvoie  plusieurs copies de la Poe
-        var trainees = traineeRepository.findByPoeTitleIgnoreCase(title);
-        trainees.forEach((t)->System.out.println("\t- "+t.getPoe()));
+        //var trainees = traineeRepository.findByPoeTitleIgnoreCase(title);
+       // trainees.forEach((t)->System.out.println("\t- "+t.getPoe()));
         // le bon: renvoie qu'une POe
         var poes = poeRepository.findByTitleIgnoreCase(title);
         poes.forEach((t)->System.out.println("\t- "+t));
@@ -53,6 +54,7 @@ private static void displayArray(Collection<?> collection){
          String poeType = "POEC";
 
         var poes = poeRepository.findByPoeTypeIgnoreCase(poeType);
+
         poes.forEach((t)->System.out.println("\t- "+t));
 
     }
@@ -63,6 +65,15 @@ private static void displayArray(Collection<?> collection){
         var poes = poeRepository.findByBeginDateGreaterThan(LocalDate.of(year,1,1));
         poes.forEach((t)->System.out.println("\t- "+t));
     }
+    @Test
+    void poesStartingYearSort(){
+        int year = 2022;
+        var poes = poeRepository.findByBeginDateBetween(LocalDate.of(year,1,1),LocalDate.of(year+1,1,1),Sort.by("beginDate"));
+        poes.forEach((t)->System.out.println("\t- "+t));
+    }
+
+
+
 
     @Test
     void traineesByPoeTitleIgnoreCase() {
@@ -71,5 +82,29 @@ private static void displayArray(Collection<?> collection){
         var trainees = traineeRepository.findByPoeTitleIgnoreCase(title);
 
         displayArray(trainees);
+    }
+
+
+    @Test
+    void poesStartingYear_jpqlQuery(){
+        int year = 2022;
+        var poes = poeRepository.findByBeginDateInYear(year);
+        poes.forEach((t)->System.out.println("\t- "+t));
+    }
+
+    @Test
+    void poesSorted() {
+        var poesSortedByDateDesc = poeRepository.findAll(
+                Sort.by("beginDate").descending()
+        );
+        displayArray(poesSortedByDateDesc);
+
+        var poesSortedByTitleDate= poeRepository.findAll(
+               // Sort.by("title")
+                //        .and( Sort.by("beginDate"))
+                Sort.by("title","beginDate")  // tri par title pis en cas d'égalité par beginDate
+        );
+        displayArray(poesSortedByTitleDate);
+
     }
 }
