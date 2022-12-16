@@ -3,6 +3,7 @@ package canard.intern.post.following.backend.dto;
 import canard.intern.post.following.backend.entity.Trainee;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
