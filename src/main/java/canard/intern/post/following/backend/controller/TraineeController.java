@@ -88,7 +88,7 @@ public class TraineeController {
     }
 
 
-@PatchMapping("{/{idTrainee}/setPoe/{idPoe}")
+@PatchMapping("/{idTrainee}/setPoe/{idPoe}")
 public TraineeDetailDto setPoe(
         @PathVariable("idTrainee") int idTrainee,
         @PathVariable int idPoe
