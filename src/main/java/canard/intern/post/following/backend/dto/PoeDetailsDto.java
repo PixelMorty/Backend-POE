@@ -1,9 +1,6 @@
 package canard.intern.post.following.backend.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -12,7 +9,8 @@ import java.util.List;
 @SuperBuilder // METTRE DES DEUX COTES, CLASSE FILLE ET PARENT
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@ToString
+@Getter @Setter
 public class PoeDetailsDto extends PoeDto{
     private List<TraineeDto> trainees;
 }
