@@ -1,5 +1,6 @@
 package canard.intern.post.following.backend.service;
 
+import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.error.UpdateException;
 
@@ -21,7 +22,7 @@ public interface TraineeService {
      * @return optional with trainee found
      * or optional empty if not exists
      */
-    Optional<TraineeDto> getById(int id);
+    Optional<TraineeDetailDto> getById(int id);
 
     /**
      * get trainees with lastname containing lastnamePartial,
@@ -37,7 +38,7 @@ public interface TraineeService {
      * @return trainee created with its id
      * @throws UpdateException if trainee cannot be created
      */
-    TraineeDto create(TraineeDto traineeDto);
+    TraineeDetailDto create(TraineeDto traineeDto);
 
     /**
      * update a trainee with this id if exists ;
@@ -48,7 +49,7 @@ public interface TraineeService {
      * or optional empty if not found
      * @throws UpdateException if found but cannot be updated
      */
-    Optional<TraineeDto> update(int id, TraineeDto traineeDto);
+    Optional<TraineeDetailDto> update(int id, TraineeDto traineeDto);
 
     /**
      * delete trainee with this id if exists

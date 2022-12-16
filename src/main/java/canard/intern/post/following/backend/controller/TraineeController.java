@@ -1,5 +1,6 @@
 package canard.intern.post.following.backend.controller;
 
+import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.service.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class TraineeController {
      * @return trainee with this id if found
      */
     @GetMapping("/{id}")
-    public TraineeDto getById(@PathVariable("id") int id){
+    public TraineeDetailDto getById(@PathVariable("id") int id){
         var optTraineeDto =  traineeService.getById(id);
         if (optTraineeDto.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -54,7 +55,7 @@ public class TraineeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TraineeDto create(@Valid @RequestBody TraineeDto traineeDto) {
+    public TraineeDetailDto create(@Valid @RequestBody TraineeDto traineeDto) {
 //        try{
             return traineeService.create(traineeDto);
 //        }catch(Exception e){
@@ -65,7 +66,7 @@ public class TraineeController {
     }
 
     @PutMapping("/{id}")
-    public TraineeDto update(
+    public TraineeDetailDto update(
             @PathVariable("id") int id,
             @Valid @RequestBody TraineeDto traineeDto
     ){

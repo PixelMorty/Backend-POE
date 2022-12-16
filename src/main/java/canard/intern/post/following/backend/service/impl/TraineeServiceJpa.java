@@ -1,5 +1,6 @@
 package canard.intern.post.following.backend.service.impl;
 
+import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.entity.Trainee;
 import canard.intern.post.following.backend.error.UpdateException;
@@ -39,12 +40,14 @@ public class TraineeServiceJpa implements TraineeService {
     }
 
     @Override
-    public Optional<TraineeDto> getById(int id) {
+    public Optional<TraineeDetailDto> getById(int id) {
         // on récup la un optional de Trainee
 
 
         return traineeRepository.findById(id)
-                .map((te)-> modelMapper.map(te, TraineeDto.class));//transfo que si y'a kkchose dans la boite
+
+                .map((te)-> modelMapper.map(te, TraineeDetailDto.class));//transfo que si y'a kkchose dans la boite
+                                                                        // va chercher tt seul l'attribut poe dans TraineeDetailDto
 
 
 
@@ -66,7 +69,7 @@ public class TraineeServiceJpa implements TraineeService {
     }
 
     @Override
-    public TraineeDto create(TraineeDto traineeDto) {
+    public TraineeDetailDto create(TraineeDto traineeDto) {
         // transformer traineeDto en trainee (grace au modelMapper)
         // le sauver dans la base de donnée grace au traineeRepository.save
         // récupérer le trainee renvoyé par traineeRepository.save et le convertir en TraineeDto
@@ -77,11 +80,11 @@ public class TraineeServiceJpa implements TraineeService {
             throw (new UpdateException("trainee couldn't be saved",e));
         }
 
-        return modelMapper.map(traineeDb, TraineeDto.class);
+        return modelMapper.map(traineeDb, TraineeDetailDto.class);
     }
 
     @Override
-    public Optional<TraineeDto> update(int id, TraineeDto traineeDto) {
+    public Optional<TraineeDetailDto> update(int id, TraineeDto traineeDto) {
         traineeDto.setId(id);
         var optTraineeDb = traineeRepository.findById(id) ;
         try {
@@ -89,7 +92,7 @@ public class TraineeServiceJpa implements TraineeService {
                 var traineeDb= optTraineeDb.get();
                 modelMapper.map(traineeDto, traineeDb); // change traineeDb in hibernate cache
                 traineeRepository.flush(); // synchro et force l'update en sql
-                return Optional.of(modelMapper.map(traineeDb, TraineeDto.class));
+                return Optional.of(modelMapper.map(traineeDb, TraineeDetailDto.class));
             }else{
                 return Optional.empty();
             }
