@@ -4,6 +4,7 @@ import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.entity.Trainee;
 import canard.intern.post.following.backend.error.UpdateException;
+import canard.intern.post.following.backend.repository.PoeRepository;
 import canard.intern.post.following.backend.repository.TraineeRepository;
 import canard.intern.post.following.backend.service.TraineeService;
 import org.modelmapper.ModelMapper;
@@ -18,8 +19,10 @@ import java.util.Set;
 public class TraineeServiceJpa implements TraineeService {
 
     @Autowired
+private
     TraineeRepository traineeRepository;
-
+@Autowired
+    PoeRepository poeRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Override
@@ -38,6 +41,7 @@ public class TraineeServiceJpa implements TraineeService {
 //        ).toList();
         return traineeRepository.findAll().stream().map((t)->modelMapper.map(t,TraineeDto.class)).toList();
     }
+
 
     @Override
     public Optional<TraineeDetailDto> getById(int id) {
@@ -116,5 +120,19 @@ public class TraineeServiceJpa implements TraineeService {
            throw (new UpdateException("Trainee couldn't be deleted",e));
             //return false;
         }
+    }
+
+    public Optional<TraineeDetailDto> setPoe(int idTrainee, int idPoe){
+       return traineeRepository.findById(idTrainee)
+                .flatMap(traineeEntity->                // permet de garder un seul niveau d'optional (sinon ça fait optional de optional (faire ça à chaque map sauf le dernier)
+                        poeRepository.findById(idPoe)
+                                .map(poeEntity -> {
+                                    traineeEntity.setPoe(poeEntity);
+                                    traineeRepository.flush();//forcer l'update
+                                    return modelMapper.map(traineeEntity, TraineeDetailDto.class);
+                                })
+                );
+
+
     }
 }

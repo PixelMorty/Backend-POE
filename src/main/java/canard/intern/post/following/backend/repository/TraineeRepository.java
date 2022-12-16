@@ -17,5 +17,4 @@ public interface TraineeRepository extends JpaRepository<Trainee,Integer> { // e
     List<Trainee> findByPoeTitleIgnoreCase(String title);
 
 
-
 }
