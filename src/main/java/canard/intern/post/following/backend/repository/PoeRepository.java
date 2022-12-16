@@ -2,12 +2,14 @@ package canard.intern.post.following.backend.repository;
 
 import canard.intern.post.following.backend.dto.IPoeTypeCountDto;
 import canard.intern.post.following.backend.dto.PoeTypeCountDto;
+import canard.intern.post.following.backend.dto.TraineeCountByPoe;
 import canard.intern.post.following.backend.entity.Poe;
 import canard.intern.post.following.backend.entity.Trainee;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.Tuple;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,6 +45,18 @@ public interface PoeRepository extends JpaRepository<Poe,Integer> {
     // spring crée tt seul l'objet concret qui suit l'interface IPoeTypeCountDto
     // meilleure solution mais valable que avec spring, et tte les entreprises n'utilisent pas spring h24
         @Query("SELECT p.poeType as poeType, count(p) as  countPoe"+
-                "  FROM Poe p   GROUP BY p.poeType")
+                "  FROM Poe p   GROUP BY p")
         List<IPoeTypeCountDto> countByPoeType2();
+
+        // utilisation des Tuple pour le retour. oblige de mettre chaque alias qu'on veut afficher (voir jpaRepositoryQueries pour l'utilisation :
+    //  poeRepository.countTraineesByPoe().forEach((c)-> System.out.println("\t- " + c.get("traineeCount",Long.class) + "   "  +c.get("title",String.class)  ));// chiper les éléments de la table
+    @Query("SELECT p.title as title ,p.id as id, COUNT(t.id) as traineeCount " +
+            "FROM Trainee t RIGHT OUTER JOIN t.poe p " +
+            "GROUP BY p " +
+            "ORDER BY traineeCount")
+    List<Tuple> countTraineesByPoe();
+//    @Query("SELECT p,count(t.id) as traineeCount FROM Trainee t RIGHT OUTER JOIN t.poe  p Group BY p ORDER BY traineeCount")// pas besoin de mettre Poe p mais t.poe c bon
+//    List<Tuple> countTraineesByPoe();
+//
+
 }

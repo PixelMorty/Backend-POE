@@ -3,6 +3,6 @@ package canard.intern.post.following.backend.dto;
 
 public interface IPoeTypeCountDto {
 
-    String getPoeTye();
+    String getPoeType();
     Long getCountPoe();
 }

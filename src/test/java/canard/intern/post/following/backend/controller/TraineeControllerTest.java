@@ -45,6 +45,7 @@ class TraineeControllerTest {
 
     @Test
     void getAll() throws Exception {
+
         var traineesDtoResponse = List.of(
                 TraineeDto.builder()
                         .id(1)
@@ -203,7 +204,6 @@ class TraineeControllerTest {
     @Test
     void getById_KO_idNotFound() throws Exception {
         int id = 2;
-
         // prepare mock response of trainee service
         given(traineeService.getById(id))
                 .willReturn(Optional.empty());

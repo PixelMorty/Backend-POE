@@ -115,6 +115,13 @@ private static void displayArray(Collection<?> collection){
     }
     @Test
     void poesCount2(){
-        poeRepository.countByPoeType2().forEach((c)-> System.out.println(c.getPoeTye()+ " " +c.getCountPoe()));
+        poeRepository.countByPoeType2().forEach((c)-> System.out.println(c.getPoeType()+ " " +c.getCountPoe()));
     }
+    @Test
+    void traineesByPoeCount(){
+     //   poeRepository.countTraineesByPoe().forEach((c)-> System.out.println(c));
+
+        poeRepository.countTraineesByPoe().forEach((c)-> System.out.println("\t- " + c.get("traineeCount",Long.class) + "   "  +c.get("title",String.class)  ));// chiper les éléments de la table
+    }
+
 }
