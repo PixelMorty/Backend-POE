@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
