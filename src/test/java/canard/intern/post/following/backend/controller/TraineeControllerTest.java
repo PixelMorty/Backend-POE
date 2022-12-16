@@ -1,19 +1,25 @@
 package canard.intern.post.following.backend.controller;
 
 import canard.intern.post.following.backend.controller.fixture.TraineeJsonProvider;
+import canard.intern.post.following.backend.dto.PoeDto;
+import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.enums.Gender;
+import canard.intern.post.following.backend.enums.PoeType;
 import canard.intern.post.following.backend.error.UpdateException;
 import canard.intern.post.following.backend.service.TraineeService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.util.NestedServletException;
 
 import java.time.LocalDate;
@@ -45,7 +51,6 @@ class TraineeControllerTest {
 
     @Test
     void getAll() throws Exception {
-
         var traineesDtoResponse = List.of(
                 TraineeDto.builder()
                         .id(1)
@@ -64,7 +69,7 @@ class TraineeControllerTest {
                         .lastname("Neymar")
                         .firstname("Jean")
                         .gender(Gender.X)
-                        .birthdate(LocalDate.of(1999, 1, 14))
+                        .birthdate(LocalDate.of(1999,1,14))
                         .build(),
                 TraineeDto.builder()
                         .id(3)
@@ -84,7 +89,6 @@ class TraineeControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(traineesDtoResponse.size())));
     }
-
 
     @Test
     void getByLastname_OK_FoundSeveral() throws Exception {
@@ -171,11 +175,11 @@ class TraineeControllerTest {
     }
 
     @Test
-    void getById_OK_idFound() throws Exception {
+    void getById_OK_idFound_withoutPoe() throws Exception {
         int id = 2;
 
         // prepare mock response of trainee service
-        var traineeDto = TraineeDto.builder()
+        var traineeDto = TraineeDetailDto.builder()
                 .id(id)
                 .lastname("Bond")
                 .firstname("James")
@@ -183,7 +187,7 @@ class TraineeControllerTest {
                 .email("james.bond@007.org")
                 .build();
         given(traineeService.getById(id))
-                        .willReturn(Optional.of(traineeDto));
+                .willReturn(Optional.of(traineeDto));
 
         // call controller with mock http client
         mockMvc.perform(get(URL_TEMPLATE_ID,  id)
@@ -202,8 +206,50 @@ class TraineeControllerTest {
     }
 
     @Test
+    void getById_OK_idFound_withPoe() throws Exception {
+        int idTrainee = 2;
+        int idPoe = 44;
+
+        // prepare mock response of trainee service
+        var traineeDto = TraineeDetailDto.builder()
+                .id(idTrainee)
+                .lastname("Bond")
+                .firstname("James")
+                .birthdate(LocalDate.of(1950,6, 12))
+                .email("james.bond@007.org")
+                .poe(PoeDto.builder()
+                        .id(idPoe)
+                        .title("Java Fullstack")
+                        .beginDate(LocalDate.of(2022,11,1))
+                        .endDate(LocalDate.of(2023,2,1))
+                        .poeType("POEC")
+                        .build()
+                )
+                .build();
+        given(traineeService.getById(idTrainee))
+                .willReturn(Optional.of(traineeDto));
+
+        // call controller with mock http client
+        mockMvc.perform(get(URL_TEMPLATE_ID,  idTrainee)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                //.andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.id").value(idTrainee))
+                .andExpect(jsonPath("$.poe.id").value(idPoe));
+
+        // verify mock service has been called by controller
+        then(traineeService)
+                .should()
+                .getById(idTrainee);
+    }
+
+    @Test
     void getById_KO_idNotFound() throws Exception {
         int id = 2;
+
         // prepare mock response of trainee service
         given(traineeService.getById(id))
                 .willReturn(Optional.empty());
@@ -224,7 +270,7 @@ class TraineeControllerTest {
     @Test
     void getById_KO_xmlNotAcceptable() throws Exception {
         int id = 2;
-        var traineeDto = TraineeDto.builder()
+        var traineeDto = TraineeDetailDto.builder()
                 .id(id)
                 .lastname("Bond")
                 .firstname("James")
@@ -252,7 +298,7 @@ class TraineeControllerTest {
         String phoneNumber = "+33700700700";
         Gender gender = Gender.M;
 
-        var traineeDtoResponse = TraineeDto.builder()
+        var traineeDtoResponse = TraineeDetailDto.builder()
                 .id(idGenerated)
                 .lastname(lastname)
                 .firstname(firstname)
@@ -293,7 +339,7 @@ class TraineeControllerTest {
     // NB: packagenames.Classname#methodename
     @ParameterizedTest
     @MethodSource("canard.intern.post.following.backend.controller.fixture.TraineeJsonProvider#traineeJsonMissingNonRequiredField")
-    void create_OK_missingNonRequiredField(TraineeDto traineeDtoResponse, String traineeJson) throws Exception {
+    void create_OK_missingNonRequiredField(TraineeDetailDto traineeDtoResponse, String traineeJson) throws Exception {
 
         given(traineeService.create(any()))
                 .willReturn(traineeDtoResponse);
@@ -349,11 +395,11 @@ class TraineeControllerTest {
 
         // call
         var ex = assertThrows(NestedServletException.class, () ->
-            mockMvc.perform(post(BASE_URL)
-                            .accept(MediaType.APPLICATION_JSON)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(traineeJson)
-                    )
+                mockMvc.perform(post(BASE_URL)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(traineeJson)
+                )
         );
 
         assertEquals(UpdateException.class, ex.getCause().getClass());
@@ -375,7 +421,7 @@ class TraineeControllerTest {
         String phoneNumber = "+33700700700";
         Gender gender = Gender.M;
 
-        var traineeDtoResponse = TraineeDto.builder()
+        var traineeDtoResponse = TraineeDetailDto.builder()
                 .id(id)
                 .lastname(lastname)
                 .firstname(firstname)
@@ -407,7 +453,7 @@ class TraineeControllerTest {
                 .andExpect(jsonPath("$.email").value(email))
                 .andExpect(jsonPath("$.gender").value(gender.toString()));
 
-       then(traineeService)
+        then(traineeService)
                 .should()
                 .update(eq(id), any());
     }
