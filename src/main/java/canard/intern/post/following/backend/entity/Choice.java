@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 @Getter @Setter
 @Entity
+@Table(name = "choices")
 public class Choice {
 
     @Id
