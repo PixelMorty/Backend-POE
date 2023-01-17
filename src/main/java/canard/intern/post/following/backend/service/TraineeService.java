@@ -9,12 +9,13 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface TraineeService {
-    /**
+    /*
      * get all trainees
      * @return trainees
      */
 
     List<TraineeDto> getAll();
+    List<TraineeDetailDto> getAllDetailList();
 
     /**
      * get a trainee by its id if exists
@@ -68,5 +69,8 @@ public interface TraineeService {
      * else optional empty
      */
     Optional<TraineeDetailDto> setPoe(int idTrainee, int idPoe);
+    Optional<TraineeDetailDto> remPoe (int idTrainee);
+    Optional<List<TraineeDetailDto>> getByPoeId(Integer idPoe);
+
 
 }
