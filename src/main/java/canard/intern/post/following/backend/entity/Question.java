@@ -3,6 +3,7 @@ package canard.intern.post.following.backend.entity;
 import canard.intern.post.following.backend.enums.QuestionType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ public class Question {
 
     @OneToMany // not ready yet
     @JoinColumn(name = "question_id")
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Set<Choice> choices = new HashSet<>();
 
 }

@@ -24,9 +24,7 @@ public class QuestionDto {
     @NotNull
     private String title ;
 
-    @NotBlank
-    @NotNull
-    @Enumerated(EnumType.STRING)
+
     private QuestionType questionType ;
 
     private Set<Choice> choices = new HashSet<>();
