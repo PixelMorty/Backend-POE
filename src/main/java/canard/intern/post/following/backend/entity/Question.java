@@ -29,5 +29,4 @@ public class Question {
     @JoinColumn(name = "question_id")
     private Set<Choice> choices = new HashSet<>();
 
-
 }
