@@ -47,12 +47,25 @@ public class TraineeController {
         return optTraineeDto.get();
     }
 
+    @GetMapping("/detailList")
+    public List<TraineeDetailDto> getAllDetailList(){return traineeService.getAllDetailList();}
     @GetMapping("/search/byLastname")
     @ResponseStatus(HttpStatus.OK)
     public Set<TraineeDto> getByLastName(@RequestParam("ln") String lastname){
         return traineeService.getByLastnameContaining(lastname);
     }
+    @GetMapping("/getByPoeId/{idPoe}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TraineeDetailDto> getByPoeId(@PathVariable("idPoe") Integer idPoe) throws ResponseStatusException{
+        var returnedList = traineeService.getByPoeId(idPoe);
+        if (returnedList.isPresent()){
+            return returnedList.get();
+        }else{
+              throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("problème avec la liste des stagiaires de la poe %d", idPoe));
+        }
 
+    }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TraineeDetailDto create(@Valid @RequestBody TraineeDto traineeDto) {
@@ -87,8 +100,8 @@ public class TraineeController {
 
     }
 
-
-@PatchMapping("/{idTrainee}/setPoe/{idPoe}")
+//WARNING C PTET DE Al MERDE
+@PatchMapping("setPoe/{idTrainee}/{idPoe}")
 public TraineeDetailDto setPoe(
         @PathVariable("idTrainee") int idTrainee,
         @PathVariable int idPoe
@@ -98,6 +111,14 @@ public TraineeDetailDto setPoe(
 }
 
 // TODO setNullPoe with a PATCH
+@PatchMapping("remPoe/{idTrainee}")
+public TraineeDetailDto remPoe(
+        @PathVariable("idTrainee") int idTrainee
+){
+    return traineeService.remPoe(idTrainee).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Trainee not found id :"+ idTrainee ));
+}
+    //remove
+    // @PatchMapping("remove/{idTrainee,idPoe}")
 
     //NB: other choice, return Dto removed if found
     @DeleteMapping("/{id}")

@@ -2,6 +2,7 @@ package canard.intern.post.following.backend.service.impl;
 
 import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
+import canard.intern.post.following.backend.entity.Poe;
 import canard.intern.post.following.backend.entity.Trainee;
 import canard.intern.post.following.backend.error.UpdateException;
 import canard.intern.post.following.backend.repository.PoeRepository;
@@ -40,6 +41,22 @@ private
 //
 //        ).toList();
         return traineeRepository.findAll().stream().map((t)->modelMapper.map(t,TraineeDto.class)).toList();
+    }
+    @Override
+    public List<TraineeDetailDto> getAllDetailList() {
+//        return traineeRepository.findAll().stream().map(
+//                (t)->TraineeDto.builder()
+//                        .id(t.getId())
+//                        .lastname(t.getLastname())
+//                        .email(t.getEmail())
+//                        .firstname(t.getFirstname())
+//                        .gender(t.getGender())
+//                        .birthdate(t.getBirthdate())
+//                        .phoneNumber(t.getPhoneNumber())
+//                        .build()
+//
+//        ).toList();
+        return traineeRepository.findAll().stream().map((t)->modelMapper.map(t,TraineeDetailDto.class)).toList();
     }
 
 
@@ -128,11 +145,33 @@ private
                         poeRepository.findById(idPoe)
                                 .map(poeEntity -> {
                                     traineeEntity.setPoe(poeEntity);
+                                    //var savedTrainee =traineeRepository.save(traineeEntity);
                                     traineeRepository.flush();//forcer l'update
                                     return modelMapper.map(traineeEntity, TraineeDetailDto.class);
                                 })
                 );
 
 
+    }
+
+
+
+    public Optional<TraineeDetailDto> remPoe (int idTrainee){
+        return traineeRepository.findById(idTrainee)
+                .map(traineeEntity-> {             // permet de garder un seul niveau d'optional (sinon ça fait optional de optional (faire ça à chaque map sauf le dernier)
+                    traineeEntity.setPoe(null);
+                    var traineeSaved=traineeRepository.save(traineeEntity);
+                    traineeRepository.flush();
+                    return  modelMapper.map(traineeSaved, TraineeDetailDto.class);
+                        }
+                );
+
+
+    }
+
+    public Optional<List<TraineeDetailDto>> getByPoeId(Integer idPoe){
+        return Optional.of( traineeRepository.findByPoeId(idPoe).stream().map(
+                        (Trainee traineeEntity)-> modelMapper.map(traineeEntity, TraineeDetailDto.class)
+                        ).toList());
     }
 }

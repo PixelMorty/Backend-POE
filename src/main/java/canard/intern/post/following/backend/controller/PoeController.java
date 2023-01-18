@@ -49,6 +49,8 @@ public class PoeController {
         return optPoeDto.get();
     }
 
+
+
     @GetMapping("/search/byTitle")
     @ResponseStatus(HttpStatus.OK)
     public Set<PoeDto> getByLastName(@RequestParam("ln") String title){
