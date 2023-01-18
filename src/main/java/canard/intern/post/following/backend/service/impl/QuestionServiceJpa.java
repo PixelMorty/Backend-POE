@@ -8,12 +8,14 @@ import canard.intern.post.following.backend.repository.QuestionRepository;
 import canard.intern.post.following.backend.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class QuestionServiceJpa implements QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
