@@ -48,12 +48,16 @@ public class TraineeController {
     }
 
     @GetMapping("/detailList")
-    public List<TraineeDetailDto> getAllDetailList(){return traineeService.getAllDetailList();}
+    public List<TraineeDetailDto> getAllDetailList(){
+        return traineeService.getAllDetailList();
+    }
+
     @GetMapping("/search/byLastname")
     @ResponseStatus(HttpStatus.OK)
     public Set<TraineeDto> getByLastName(@RequestParam("ln") String lastname){
         return traineeService.getByLastnameContaining(lastname);
     }
+
     @GetMapping("/getByPoeId/{idPoe}")
     @ResponseStatus(HttpStatus.OK)
     public List<TraineeDetailDto> getByPoeId(@PathVariable("idPoe") Integer idPoe) throws ResponseStatusException{

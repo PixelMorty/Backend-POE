@@ -44,18 +44,7 @@ private
     }
     @Override
     public List<TraineeDetailDto> getAllDetailList() {
-//        return traineeRepository.findAll().stream().map(
-//                (t)->TraineeDto.builder()
-//                        .id(t.getId())
-//                        .lastname(t.getLastname())
-//                        .email(t.getEmail())
-//                        .firstname(t.getFirstname())
-//                        .gender(t.getGender())
-//                        .birthdate(t.getBirthdate())
-//                        .phoneNumber(t.getPhoneNumber())
-//                        .build()
-//
-//        ).toList();
+
         return traineeRepository.findAll().stream().map((t)->modelMapper.map(t,TraineeDetailDto.class)).toList();
     }
 
@@ -160,9 +149,9 @@ private
         return traineeRepository.findById(idTrainee)
                 .map(traineeEntity-> {             // permet de garder un seul niveau d'optional (sinon ça fait optional de optional (faire ça à chaque map sauf le dernier)
                     traineeEntity.setPoe(null);
-                    var traineeSaved=traineeRepository.save(traineeEntity);
+                    //var traineeSaved=traineeRepository.save(traineeEntity);
                     traineeRepository.flush();
-                    return  modelMapper.map(traineeSaved, TraineeDetailDto.class);
+                    return  modelMapper.map(traineeEntity, TraineeDetailDto.class);
                         }
                 );
 
