@@ -33,8 +33,9 @@ public class QuestionServiceJpa implements QuestionService {
 
     @Override
     public Optional<QuestionDto> getById(Integer id) {
-        //TODO
-        return Optional.empty();
+
+        return questionRepository.findById(id)
+                .map((question)-> modelMapper.map(question, QuestionDto.class));
     }
 
     @Override
@@ -51,15 +52,20 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public boolean delete(Integer id) {
 
-        try{
-            //TODO
-        }
-        catch(Exception e){
-            throw (new UpdateException("Question couldn't be deleted",e));
+        try {
+            if (questionRepository.findById(id).isPresent()) {
+                questionRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw (new UpdateException("Question couldn't be deleted", e));
         }
     }
+
 
     @Override
     public void update(Integer id, QuestionDto questionDto) {
