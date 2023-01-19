@@ -6,6 +6,8 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter @Setter
 @Entity
@@ -18,5 +20,7 @@ public class Choice {
 
 
     @Column(nullable = false, length = 50)
+    @NotBlank
+    @NotNull
     private String name;
 }

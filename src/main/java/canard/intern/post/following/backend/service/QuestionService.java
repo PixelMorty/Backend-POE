@@ -12,7 +12,7 @@ public interface QuestionService {
 
     QuestionDto create(QuestionDto questionDto);
 
-    void delete(Integer id);
+    boolean delete(Integer id);
 
     void update(Integer id, QuestionDto questionDto);
 }

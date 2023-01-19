@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,8 @@ public class Question {
 
     @OneToMany // not ready yet
     @JoinColumn(name = "question_id")
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REMOVE})
+    @Valid()
     private Set<Choice> choices = new HashSet<>();
 
 }
