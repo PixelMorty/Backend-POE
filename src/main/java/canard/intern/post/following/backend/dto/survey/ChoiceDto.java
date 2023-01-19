@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
+// ALERTE  IL EST INUTILE POUR LINSTANT!!
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

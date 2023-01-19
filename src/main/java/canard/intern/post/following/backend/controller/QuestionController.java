@@ -49,7 +49,10 @@ public class QuestionController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteQuestion (@PathVariable("id") Integer id)  {
-        questionService.delete(id);
+
+        if(! questionService.delete(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        };
     }
 
     @PatchMapping("/update/{id}")

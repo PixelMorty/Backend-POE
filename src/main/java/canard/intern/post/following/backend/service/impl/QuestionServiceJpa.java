@@ -38,18 +38,6 @@ public class QuestionServiceJpa implements QuestionService {
                 .map((question)-> modelMapper.map(question, QuestionDto.class));
     }
 
-    @Override
-    public QuestionDto create(QuestionDto questionDto) {
-
-
-        try {
-            var varIntermediaire = modelMapper.map(questionDto,Question.class);
-            var question = questionRepository.save(varIntermediaire);
-            return modelMapper.map( question, QuestionDto.class);
-        }catch(Exception e){
-            throw (new UpdateException("Question couldn't be saved",e));
-        }
-    }
 
     @Override
     public boolean delete(Integer id) {
@@ -67,8 +55,24 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
 
+
+    @Override
+    public QuestionDto create(QuestionDto questionDto) {
+
+
+        try {
+            var varIntermediaire = modelMapper.map(questionDto,Question.class);
+            var question = questionRepository.save(varIntermediaire);
+            return modelMapper.map( question, QuestionDto.class);
+        }catch(Exception e){
+            throw (new UpdateException("Question couldn't be saved",e));
+        }
+    }
+
+
+
     @Override
     public void update(Integer id, QuestionDto questionDto) {
-
+//TODO
     }
 }
