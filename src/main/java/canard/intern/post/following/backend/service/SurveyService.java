@@ -12,4 +12,5 @@ public interface SurveyService {
     Optional<SurveyDto> getById(Integer id);
     Optional<SurveyDto> update (Integer id,SurveyDto surveyDto);
     Optional<SurveyDto> create(SurveyDto surveyDto);
+    Optional<SurveyDto>  changeQuestions(Integer id,List<Integer> questionIds);
 }

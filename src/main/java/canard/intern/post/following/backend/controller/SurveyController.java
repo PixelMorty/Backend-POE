@@ -68,6 +68,16 @@ public class SurveyController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+    @PatchMapping ("/change-questions/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public SurveyDto changeQuestions ( @RequestBody List<Integer> questionIds,@PathVariable("id") Integer id)  {
+        var optSurveyDtoDb =surveyService.changeQuestions(id,questionIds);
+        if(optSurveyDtoDb.isPresent()){
+            return optSurveyDtoDb.get();
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 

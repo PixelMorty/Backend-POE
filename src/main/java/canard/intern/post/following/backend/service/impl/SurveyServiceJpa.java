@@ -3,6 +3,7 @@ package canard.intern.post.following.backend.service.impl;
 import canard.intern.post.following.backend.dto.survey.SurveyDto;
 import canard.intern.post.following.backend.entity.Survey;
 import canard.intern.post.following.backend.error.UpdateException;
+import canard.intern.post.following.backend.repository.QuestionRepository;
 import canard.intern.post.following.backend.repository.SurveyRepository;
 import canard.intern.post.following.backend.service.SurveyService;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SurveyServiceJpa implements SurveyService {
@@ -20,6 +22,8 @@ public class SurveyServiceJpa implements SurveyService {
     private SurveyRepository surveyRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Override
     public List<SurveyDto> getAll(){
@@ -97,6 +101,41 @@ public class SurveyServiceJpa implements SurveyService {
         }else{
             return Optional.empty();
         }
+
+    }
+
+@Override
+   public Optional<SurveyDto>  changeQuestions(Integer id,List<Integer> questionIds){
+    StringBuilder questionErrorMessage= new StringBuilder("");
+    try {
+        var optSurveyDb = surveyRepository.findById(id);
+
+        if(optSurveyDb.isPresent()){
+
+           Survey surveyDb =optSurveyDb.get();
+
+            var questions = questionIds.stream().map((questionId)->{
+                var optquestionTemp = questionRepository.findById(questionId);
+                if(optquestionTemp.isPresent()){
+                    return optquestionTemp.get();
+                }else{
+                    questionErrorMessage.append("La question d'id : ").append(questionId).append(" n'existe pas dans la base de données");
+                    return optquestionTemp.get();
+                }
+            }
+            ).collect(Collectors.toSet());
+            surveyDb.setQuestions(questions);
+
+            surveyRepository.flush();
+            return Optional.of( modelMapper.map(surveyDb, SurveyDto.class));
+        }else{
+            return Optional.empty();
+        }
+
+    }catch(Exception e){
+        throw (new UpdateException("Survey's questions coulnd't be changed " + questionErrorMessage ,e));
+        //return false;
+    }
 
     }
 
