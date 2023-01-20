@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -35,17 +37,34 @@ public class SurveyController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    QuestionDto getById(@PathVariable("id") Integer id) {
-        var
-
-        if (optSurveyDto.isPresent()) {
-            return optSurveyDto.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    SurveyDto getById(@PathVariable("id") Integer id) {
+        var optSurveyDto =surveyService.getById(id);
+            if(optSurveyDto.isPresent()){
+                return optSurveyDto.get();
+            }else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
     }
-
 
 @PostMapping ("/add")
 @ResponseStatus(HttpStatus.CREATED)
+public SurveyDto addSurvey (@Valid @RequestBody SurveyDto surveyDto)  {
+    return surveyService.create(surveyDto);
+}
 
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSurvey (@PathVariable("id") Integer id)  {
+
+        if(! surveyService.delete(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        };
+    }
+}
+
+
+
+
+        //back survey:
+                //SurveyDto getByid()
+                //update(idQuestionnaire, [idQuestions])

@@ -24,6 +24,7 @@ public class SurveyDto {
     private String title;
 
 
+
     private Set<Question> questions = new HashSet<>();
 
 }
