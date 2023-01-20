@@ -1,6 +1,7 @@
 package canard.intern.post.following.backend.controller;
 
 import canard.intern.post.following.backend.dto.survey.QuestionDto;
+import canard.intern.post.following.backend.service.ChoiceService;
 import canard.intern.post.following.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -15,7 +17,6 @@ import java.util.Set;
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
-
 
 
     @GetMapping()
@@ -56,9 +57,10 @@ public class QuestionController {
     }
 
     @PatchMapping("/update/{id}")
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    public void update(@PathVariable("id") Integer id, @Valid @RequestBody  QuestionDto questionDto){
-        questionService.update(id, questionDto);
+    public Optional<QuestionDto> update(@PathVariable("id") Integer id, @Valid @RequestBody  QuestionDto questionDto){
+        // TODO renvoyer throw new ResponseStatusException(HttpStatus.NOT_FOUND);  si questionService.update(id, questionDto) renvoie un optionel vide
+        // TODO renvoyer questionService.update(id, questionDto)  sinon PAS DEUX FOIS LA REQUETTE UPDATE PLS
+       return  questionService.update(id, questionDto);
     }
 
 

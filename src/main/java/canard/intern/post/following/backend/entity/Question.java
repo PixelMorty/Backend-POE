@@ -29,7 +29,7 @@ public class Question {
 
     @OneToMany // not ready yet
     @JoinColumn(name = "question_id")
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REMOVE})
+    @Cascade({ org.hibernate.annotations.CascadeType.PERSIST})
     @Valid()
     private Set<Choice> choices = new HashSet<>();
 

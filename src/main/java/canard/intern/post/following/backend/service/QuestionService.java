@@ -14,5 +14,5 @@ public interface QuestionService {
 
     boolean delete(Integer id);
 
-    void update(Integer id, QuestionDto questionDto);
+    Optional<QuestionDto> update(Integer id, QuestionDto questionDto);
 }

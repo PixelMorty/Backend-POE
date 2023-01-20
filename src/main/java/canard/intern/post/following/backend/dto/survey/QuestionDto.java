@@ -29,5 +29,6 @@ public class QuestionDto {
 
     private QuestionType questionType ;
 
-    private Set<Choice> choices = new HashSet<>();
+
+    private Set<ChoiceDto> choices = new HashSet<>();
 }
