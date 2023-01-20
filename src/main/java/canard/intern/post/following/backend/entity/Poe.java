@@ -37,6 +37,8 @@ import java.util.Set;
 
         @Column(name = "end_date",nullable = false)
         private LocalDate endDate;
+        @Column(name = "description_",length = 850)
+        private String description="";
 // @OneToMany
  //       private Set<Trainee> trainees;
 

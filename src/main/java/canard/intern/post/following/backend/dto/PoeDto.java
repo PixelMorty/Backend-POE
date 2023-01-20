@@ -41,5 +41,6 @@ public class PoeDto {
     @NotNull
     private LocalDate endDate;
 
+    private String description;
 
 }
