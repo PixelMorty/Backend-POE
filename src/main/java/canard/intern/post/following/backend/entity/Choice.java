@@ -20,7 +20,5 @@ public class Choice {
 
 
     @Column(nullable = false, length = 50)
-    @NotBlank
-    @NotNull
     private String name;
 }
