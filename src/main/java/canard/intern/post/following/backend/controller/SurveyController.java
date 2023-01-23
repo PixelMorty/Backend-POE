@@ -1,6 +1,19 @@
 package canard.intern.post.following.backend.controller;
 
+import canard.intern.post.following.backend.dto.survey.SurveyDto;
+import canard.intern.post.following.backend.service.SurveyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import canard.intern.post.following.backend.dto.survey.QuestionDto;
+import canard.intern.post.following.backend.service.ChoiceService;
+import canard.intern.post.following.backend.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+<<<<<<< HEAD
 import canard.intern.post.following.backend.dto.survey.QuestionDto;
 import canard.intern.post.following.backend.dto.survey.SurveyDto;
 import canard.intern.post.following.backend.service.SurveyService;
@@ -16,6 +29,14 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/survey")
 
+=======
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Set;
+
+@RestController
+@RequestMapping("/api/surveys")
+>>>>>>> ff0f2076d4d60765475d1560acc163ecf7695afa
 public class SurveyController {
 
 
@@ -25,6 +46,7 @@ public class SurveyController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
+<<<<<<< HEAD
     Set<SurveyDto> getAll() throws ResponseStatusException {
         var optSurveyDto = surveyService.getAll();
         if (optSurveyDto.isPresent()) {
@@ -32,6 +54,11 @@ public class SurveyController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+=======
+    List<SurveyDto> getAll() throws ResponseStatusException {
+        return  surveyService.getAll();
+
+>>>>>>> ff0f2076d4d60765475d1560acc163ecf7695afa
     }
 
 
@@ -39,6 +66,7 @@ public class SurveyController {
     @ResponseStatus(HttpStatus.OK)
     SurveyDto getById(@PathVariable("id") Integer id) {
         var optSurveyDto =surveyService.getById(id);
+<<<<<<< HEAD
             if(optSurveyDto.isPresent()){
                 return optSurveyDto.get();
             }else {
@@ -50,6 +78,59 @@ public class SurveyController {
 @ResponseStatus(HttpStatus.CREATED)
 public SurveyDto addSurvey (@Valid @RequestBody SurveyDto surveyDto)  {
     return surveyService.create(surveyDto);
+=======
+        if(optSurveyDto.isPresent()){
+            return optSurveyDto.get();
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public SurveyDto addSurvey (@Valid @RequestBody SurveyDto surveyDto)  {
+
+        var optSurveyDtoDb =surveyService.create(surveyDto);
+        if(optSurveyDtoDb.isPresent()){
+            return optSurveyDtoDb.get();
+        }else{
+            throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+        }
+    }
+
+
+    @PatchMapping ("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public SurveyDto updateSurvey (@Valid @RequestBody SurveyDto surveyDto,@PathVariable("id") Integer id)  {
+        var optSurveyDtoDb =surveyService.update(id,surveyDto);
+        if(optSurveyDtoDb.isPresent()){
+            return optSurveyDtoDb.get();
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PatchMapping ("/change-questions/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public SurveyDto changeQuestions ( @RequestBody List<Integer> questionIds,@PathVariable("id") Integer id)  {
+        var optSurveyDtoDb =surveyService.changeQuestions(id,questionIds);
+        if(optSurveyDtoDb.isPresent()){
+            return optSurveyDtoDb.get();
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSurvey (@PathVariable("id") Integer id)  {
+
+        if(! surveyService.delete(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        };
+    }
+>>>>>>> ff0f2076d4d60765475d1560acc163ecf7695afa
 }
 
     @DeleteMapping("/delete/{id}")

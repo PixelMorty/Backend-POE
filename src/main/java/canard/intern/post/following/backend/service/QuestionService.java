@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface QuestionService {
-    Optional<Set<QuestionDto>> getAll();
+    public Optional<Set<QuestionDto>> getAll();
 
     Optional<QuestionDto> getById(Integer id);
 
