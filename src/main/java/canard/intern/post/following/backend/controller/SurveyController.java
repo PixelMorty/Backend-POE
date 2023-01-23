@@ -81,7 +81,7 @@ public class SurveyController {
 
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSurvey (@PathVariable("id") Integer id)  {
 
