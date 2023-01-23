@@ -41,7 +41,7 @@ public class QuestionController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public QuestionDto addQuestion (@Valid @RequestBody QuestionDto questionDto)  {
         return questionService.create(questionDto);
