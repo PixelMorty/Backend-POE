@@ -56,7 +56,7 @@ public class QuestionController {
         };
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("{id}")
     public Optional<QuestionDto> update(@PathVariable("id") Integer id, @Valid @RequestBody  QuestionDto questionDto){
         // TODO renvoyer throw new ResponseStatusException(HttpStatus.NOT_FOUND);  si questionService.update(id, questionDto) renvoie un optionel vide
         // TODO renvoyer questionService.update(id, questionDto)  sinon PAS DEUX FOIS LA REQUETTE UPDATE PLS

@@ -45,7 +45,7 @@ public class SurveyController {
         }
     }
 
-    @PostMapping ("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public SurveyDto addSurvey (@Valid @RequestBody SurveyDto surveyDto)  {
 
@@ -58,7 +58,7 @@ public class SurveyController {
     }
 
 
-    @PatchMapping ("/update/{id}")
+    @PatchMapping ("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SurveyDto updateSurvey (@Valid @RequestBody SurveyDto surveyDto,@PathVariable("id") Integer id)  {
         var optSurveyDtoDb =surveyService.update(id,surveyDto);
