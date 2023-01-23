@@ -47,7 +47,7 @@ public class QuestionController {
         return questionService.create(questionDto);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteQuestion (@PathVariable("id") Integer id)  {
 
@@ -56,7 +56,7 @@ public class QuestionController {
         };
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     public Optional<QuestionDto> update(@PathVariable("id") Integer id, @Valid @RequestBody  QuestionDto questionDto){
         // TODO renvoyer throw new ResponseStatusException(HttpStatus.NOT_FOUND);  si questionService.update(id, questionDto) renvoie un optionel vide
         // TODO renvoyer questionService.update(id, questionDto)  sinon PAS DEUX FOIS LA REQUETTE UPDATE PLS
