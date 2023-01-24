@@ -21,7 +21,7 @@ public class Survey {
     private String title;
 
     @ManyToMany
-    @JoinTable(name = "survey_contains_question",
+    @JoinTable(name = "survey_contrains_question",
             joinColumns = @JoinColumn(name = "survey_id"), // FK to this class (survey)
             inverseJoinColumns = @JoinColumn(name = "question_id") // FK to other class (Question)
     )
