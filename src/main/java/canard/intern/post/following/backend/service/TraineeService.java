@@ -1,5 +1,7 @@
 package canard.intern.post.following.backend.service;
 
+
+
 import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.error.UpdateException;
