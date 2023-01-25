@@ -3,7 +3,7 @@ package canard.intern.post.following.backend.error;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND) // rend cette exception compréhensible par spring
+@ResponseStatus(HttpStatus.BAD_REQUEST) // rend cette exception compréhensible par spring
 public class UpdateException extends RuntimeException {
     public UpdateException() {
     }
