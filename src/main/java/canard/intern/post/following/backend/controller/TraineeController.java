@@ -74,7 +74,8 @@ public class TraineeController {
     @ResponseStatus(HttpStatus.CREATED)
     public TraineeDetailDto create(@Valid @RequestBody TraineeDto traineeDto) {
 //        try{
-            return traineeService.create(traineeDto);
+            var response = traineeService.create(traineeDto);
+            return response;
 //        }catch(Exception e){
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 //                    "duplicate mail");

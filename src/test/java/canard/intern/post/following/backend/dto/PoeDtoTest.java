@@ -30,7 +30,8 @@ class PoeDtoTest {
 
                 "POEI",
                 LocalDate.of(2022, 1, 1),
-                LocalDate.of(2022,12,1));
+                LocalDate.of(2022,12,1)
+                , "description");
     }
 
 
