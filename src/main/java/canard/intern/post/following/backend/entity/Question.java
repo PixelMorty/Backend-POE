@@ -27,10 +27,13 @@ public class Question {
     @Column(nullable = false, length = 13)
     private QuestionType questionType ;
 
+
+
     @OneToMany // not ready yet
     @JoinColumn(name = "question_id")
     @Cascade({ org.hibernate.annotations.CascadeType.PERSIST})
     @Valid()
     private Set<Choice> choices = new HashSet<>();
+
 
 }
