@@ -1,7 +1,6 @@
 package canard.intern.post.following.backend.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,38 +15,45 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class BasicAuthenticationConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return  http
-                .cors()
-                .and()
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/login","/public/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .build();
-    }
+	
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER_ROLE")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+	  @Bean
+	  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    return http
+	    	.cors()
+	    	// CSRF
+	    	.and()
+	    	.csrf()
+	    	.disable() // for dev only
+	    	// authorizations
+	    	.authorizeRequests()
+	        .antMatchers("/login", "/public/**").permitAll()
+	        .anyRequest().authenticated()
+	        // authentication
+	        .and()
+	        .httpBasic()
+	        // session
+	        .and()
+	        .sessionManagement()
+	        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        // finalize chain
+	    	.and()
+	   		.build();
+	  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(8);
-    }
+	  @Bean
+	  public InMemoryUserDetailsManager userDetailsService() {
+	    UserDetails user = User
+	        .withUsername("user")
+	        .password(passwordEncoder().encode("password"))
+	        .roles("USER_ROLE")
+	        .build();
+	    return new InMemoryUserDetailsManager(user);
+	  }
 
+	  @Bean
+	  public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder(8);
+	  }
 }
+

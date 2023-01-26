@@ -1,5 +1,6 @@
 package canard.intern.post.following.backend.controller.fixture;
 
+import canard.intern.post.following.backend.dto.TraineeDetailDto;
 import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.enums.Gender;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,14 +32,14 @@ public class TraineeJsonProvider {
 
     public static Stream<Arguments> traineeJsonMissingNonRequiredField(){
         return Stream.of(
-                traineeDtoAndJsonWithoutId(TraineeDto.builder()
+                traineeDtoAndJsonWithoutId(TraineeDetailDto.builder()
                         .id(12345)
                         .lastname("Solo")
                         .firstname("Han")
                         .birthdate(LocalDate.of(1950,11,5))
                         .email("han.solo@faucon-millenium.fr")
                         .build()),
-                traineeDtoAndJsonWithoutId(TraineeDto.builder()
+                traineeDtoAndJsonWithoutId(TraineeDetailDto.builder()
                         .id(12345)
                         .lastname("Solo")
                         .firstname("Han")
@@ -46,7 +47,7 @@ public class TraineeJsonProvider {
                         .email("han.solo@faucon-millenium.fr")
                         .gender(Gender.M)
                         .build()),
-                traineeDtoAndJsonWithoutId(TraineeDto.builder()
+                traineeDtoAndJsonWithoutId(TraineeDetailDto.builder()
                         .id(12345)
                         .lastname("Solo")
                         .firstname("Han")
