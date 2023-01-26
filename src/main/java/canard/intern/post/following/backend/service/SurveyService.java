@@ -7,10 +7,15 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface SurveyService {
-    List<SurveyDto> getAll();
-    Boolean delete(Integer id);
-    Optional<SurveyDto> getById(Integer id);
-    Optional<SurveyDto> update (Integer id,SurveyDto surveyDto);
-    Optional<SurveyDto> create(SurveyDto surveyDto);
-    Optional<SurveyDto>  changeQuestions(Integer id,List<Integer> questionIds);
+	List<SurveyDto> getAll();
+
+	Boolean delete(Integer id);
+
+	Optional<SurveyDto> getById(Integer id);
+
+	Optional<SurveyDto> update(Integer id, SurveyDto surveyDto);
+
+	Optional<SurveyDto> create(SurveyDto surveyDto);
+
+	Optional<SurveyDto> changeQuestions(Integer id, List<Integer> questionIds);
 }

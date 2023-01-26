@@ -85,7 +85,7 @@ public class SurveyController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSurvey (@PathVariable("id") Integer id)  {
 
-        if(! surveyService.delete(id)){
+        if(!surveyService.delete(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         };
     }
