@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 @ToString
 @Getter
@@ -17,11 +16,12 @@ import java.util.Set;
 public class SurveyDto {
 
 
-   // private List<Integer> idPositions;
+
     private Integer id;
 
-
-    private String title="Titre";
+    @NotNull
+    @NotBlank
+    private String title;
 
     private Set<Question> questions = new HashSet<>();
 
