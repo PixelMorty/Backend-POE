@@ -4,35 +4,32 @@ import canard.intern.post.following.backend.enums.QuestionType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name =  "questions")
-public class Question {
+@Table(name =  "survey_responses")
+public class SurveyResponse {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
-    @Column(nullable = false, length = 50)
-    private String title ;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 13)
-    private QuestionType questionType ;
-
-
+    @OneToOne
+    private Survey survey;
+// stagiaire
 
     @OneToMany // not ready yet
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "survey_response_id")
     @Cascade({ org.hibernate.annotations.CascadeType.ALL})
-    private Set<Choice> choices = new HashSet<>();
+    private Set<QuestionResponse> questionResponses = new HashSet<>();
 
 
 }
