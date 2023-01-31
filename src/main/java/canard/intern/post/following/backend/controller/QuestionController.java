@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/question")
+@RequestMapping("/api/questions")
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
