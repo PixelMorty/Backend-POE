@@ -13,4 +13,5 @@ import java.util.List;
 @Getter @Setter
 public class PoeDetailsDto extends PoeDto{
     private List<TraineeDto> trainees;
+
 }

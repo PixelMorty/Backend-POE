@@ -22,14 +22,15 @@ public class SurveyResponse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
-    @OneToOne
+    @ManyToOne
     private Survey survey;
-// stagiaire
+
 
     @OneToMany // not ready yet
     @JoinColumn(name = "survey_response_id")
     @Cascade({ org.hibernate.annotations.CascadeType.ALL})
     private Set<QuestionResponse> questionResponses = new HashSet<>();
 
-
+    @OneToOne
+    private Trainee trainee;
 }
