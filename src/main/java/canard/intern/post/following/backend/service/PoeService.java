@@ -60,4 +60,11 @@ public interface PoeService {
      */
     boolean delete(int id);
 
+    PoeDetailsDto addSurveyFirstMonth(Integer poeId,Integer surveyId);
+
+    PoeDetailsDto addSurveySecondMonth(Integer poeId,Integer surveyId);
+
+    PoeDetailsDto addSurveyThirdMonth(Integer poeId,Integer surveyId);
+
+    PoeDetailsDto removeSurveys(Integer poeId);
 }

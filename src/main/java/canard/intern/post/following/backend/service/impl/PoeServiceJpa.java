@@ -6,6 +6,7 @@ import canard.intern.post.following.backend.dto.TraineeDto;
 import canard.intern.post.following.backend.entity.Poe;
 import canard.intern.post.following.backend.error.UpdateException;
 import canard.intern.post.following.backend.repository.PoeRepository;
+import canard.intern.post.following.backend.repository.SurveyRepository;
 import canard.intern.post.following.backend.repository.TraineeRepository;
 import canard.intern.post.following.backend.service.PoeService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +26,8 @@ public class PoeServiceJpa implements PoeService {
     TraineeRepository traineeRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private SurveyRepository surveyRepository;
 
     @Override
     public List<PoeDto> getAll(){
@@ -102,6 +105,120 @@ public class PoeServiceJpa implements PoeService {
             }
         }catch(Exception e){// autres problèmes
             throw (new UpdateException("poe couldn't be deleted",e));
+            //return false;
+        }
+    }
+
+    @Override
+    public PoeDetailsDto addSurveyFirstMonth(Integer poeId,Integer surveyId) {
+
+        try {
+            var OptPoeEntity = poeRepository.findById(poeId);
+                if (OptPoeEntity.isEmpty()) {
+                    throw (new UpdateException("no poe with id : " + poeId));
+                } else {
+
+                    var surveyEntity = surveyRepository.findById(surveyId);
+                    if (surveyEntity.isEmpty()){
+                        throw (new UpdateException("no survey at id : " + surveyId));
+                    }else{
+                        OptPoeEntity.get().setSurveyFirstMonth(surveyEntity.get());
+                    }
+
+                }
+                poeRepository.flush(); // synchro et force l'update en sql
+                var poeDetailsDto=modelMapper.map(OptPoeEntity.get(), PoeDetailsDto.class);
+                var trainees = traineeRepository.findByPoeId(poeDetailsDto.getId()).stream().map((te)->
+                        modelMapper.map(te,TraineeDto.class)
+                    ).toList();
+                poeDetailsDto.setTrainees(trainees);
+                return poeDetailsDto;
+            }catch(Exception e){// autres problèmes
+                throw (new UpdateException("poe survey couldn't be updated ",e));
+                //return false;
+            }
+    }
+
+    @Override
+    public PoeDetailsDto addSurveySecondMonth(Integer poeId,Integer surveyId) {
+        try {
+            var OptPoeEntity = poeRepository.findById(poeId);
+            if (OptPoeEntity.isEmpty()) {
+                throw (new UpdateException("no poe with id : " + poeId));
+            } else {
+
+                var surveyEntity = surveyRepository.findById(surveyId);
+                if (surveyEntity.isEmpty()){
+                    throw (new UpdateException("no survey at id : " + surveyId));
+                }else{
+                    OptPoeEntity.get().setSurveySecondMonth(surveyEntity.get());
+                }
+
+            }
+            poeRepository.flush(); // synchro et force l'update en sql
+            var poeDetailsDto=modelMapper.map(OptPoeEntity.get(), PoeDetailsDto.class);
+            var trainees = traineeRepository.findByPoeId(poeDetailsDto.getId()).stream().map((te)->
+                    modelMapper.map(te,TraineeDto.class)
+            ).toList();
+            poeDetailsDto.setTrainees(trainees);
+            return poeDetailsDto;
+        }catch(Exception e){// autres problèmes
+            throw (new UpdateException("poe survey couldn't be updated ",e));
+            //return false;
+        }
+    }
+
+    @Override
+    public PoeDetailsDto addSurveyThirdMonth(Integer poeId,Integer surveyId) {
+        try {
+            var OptPoeEntity = poeRepository.findById(poeId);
+            if (OptPoeEntity.isEmpty()) {
+                throw (new UpdateException("no poe with id : " + poeId));
+            } else {
+
+                var surveyEntity = surveyRepository.findById(surveyId);
+                if (surveyEntity.isEmpty()){
+                    throw (new UpdateException("no survey at id : " + surveyId));
+                }else{
+                    OptPoeEntity.get().setSurveyThirdMonth(surveyEntity.get());
+                }
+
+            }
+            poeRepository.flush(); // synchro et force l'update en sql
+            var poeDetailsDto=modelMapper.map(OptPoeEntity.get(), PoeDetailsDto.class);
+            var trainees = traineeRepository.findByPoeId(poeDetailsDto.getId()).stream().map((te)->
+                    modelMapper.map(te,TraineeDto.class)
+            ).toList();
+            poeDetailsDto.setTrainees(trainees);
+            return poeDetailsDto;
+        }catch(Exception e){// autres problèmes
+            throw (new UpdateException("poe survey couldn't be updated ",e));
+            //return false;
+        }
+    }
+
+    @Override
+    public PoeDetailsDto removeSurveys(Integer poeId) {
+        try {
+            var OptPoeEntity = poeRepository.findById(poeId);
+            if (OptPoeEntity.isEmpty()) {
+                throw (new UpdateException("no poe with id : " + poeId));
+            } else {
+                OptPoeEntity.get().setSurveyFirstMonth(null);
+                OptPoeEntity.get().setSurveySecondMonth(null);
+                OptPoeEntity.get().setSurveyThirdMonth(null);
+
+
+            }
+            poeRepository.flush(); // synchro et force l'update en sql
+            var poeDetailsDto=modelMapper.map(OptPoeEntity.get(), PoeDetailsDto.class);
+            var trainees = traineeRepository.findByPoeId(poeDetailsDto.getId()).stream().map((te)->
+                    modelMapper.map(te,TraineeDto.class)
+            ).toList();
+            poeDetailsDto.setTrainees(trainees);
+            return poeDetailsDto;
+        }catch(Exception e){// autres problèmes
+            throw (new UpdateException("poe 's survey couldn't be removed ",e));
             //return false;
         }
     }

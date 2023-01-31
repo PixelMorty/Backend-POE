@@ -1,15 +1,13 @@
 package canard.intern.post.following.backend.entity;
 
 
-import canard.intern.post.following.backend.enums.PoeType;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 
-    @ToString
+@ToString
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -39,6 +37,12 @@ import java.util.Set;
         private LocalDate endDate;
         @Column(name = "description_",length = 850)
         private String description="";
+        @ManyToOne
+        private Survey surveyFirstMonth;
+        @ManyToOne
+        private Survey surveySecondMonth;
+        @ManyToOne
+        private Survey surveyThirdMonth;
 // @OneToMany
  //       private Set<Trainee> trainees;
 

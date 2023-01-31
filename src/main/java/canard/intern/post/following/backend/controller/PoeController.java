@@ -3,6 +3,7 @@ package canard.intern.post.following.backend.controller;
 import canard.intern.post.following.backend.dto.PoeDetailsDto;
 import canard.intern.post.following.backend.dto.PoeDto;
 
+import canard.intern.post.following.backend.error.UpdateException;
 import canard.intern.post.following.backend.service.PoeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,4 +100,35 @@ public class PoeController {
         if(!deleted) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("No poe found with id <%d>", id));
     }
+
+    // SURVEYS:
+    @PostMapping("/{poeId}/survey-first-month/{surveyId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PoeDetailsDto addSurveyFirstMonth( @PathVariable("surveyId")  Integer surveyId,@PathVariable("poeId") int poeId) {
+        return poeService.addSurveyFirstMonth(poeId,surveyId);
+    }
+
+    @PostMapping("/{poeId}/survey-second-month/{surveyId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PoeDetailsDto addSurveySecondMonth(  @PathVariable("surveyId")  Integer surveyId,@PathVariable("poeId") int poeId) {
+        return poeService.addSurveySecondMonth(poeId,surveyId);
+    }
+
+    @PostMapping("/{poeId}/survey-third-month/{surveyId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PoeDetailsDto addSurveyThirdMonth(  @PathVariable("surveyId")  Integer surveyId,@PathVariable("poeId") int poeId) {
+        return poeService.addSurveyThirdMonth(poeId,surveyId);
+    }
+
+
+    @DeleteMapping("/{poeId}/surveys")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PoeDetailsDto removeSurveys(@PathVariable("poeId") int poeId) {
+
+        return poeService.removeSurveys(poeId);
+
+
+    }
+
+
 }
