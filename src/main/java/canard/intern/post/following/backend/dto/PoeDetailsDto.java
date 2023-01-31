@@ -1,5 +1,6 @@
 package canard.intern.post.following.backend.dto;
 
+import canard.intern.post.following.backend.entity.Survey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -13,5 +14,6 @@ import java.util.List;
 @Getter @Setter
 public class PoeDetailsDto extends PoeDto{
     private List<TraineeDto> trainees;
+
 
 }
