@@ -12,5 +12,5 @@ import java.util.Set;
 public interface QuestionRepository extends JpaRepository<Question,Integer> {
     @Override
     List<Question> findAll();
-
+    List<Question>  findAllByFavorite(boolean favorite);
 }

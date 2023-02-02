@@ -30,6 +30,17 @@ public class QuestionController {
         }
     }
 
+    @GetMapping("/favorites")
+    @ResponseStatus(HttpStatus.OK)
+    Set<QuestionDto> getFavorites() throws ResponseStatusException{
+        var optQuestionDtos =questionService.getFavorites();
+        if(optQuestionDtos.isPresent()){
+            return optQuestionDtos.get();
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     QuestionDto getById(@PathVariable("id") Integer id ){

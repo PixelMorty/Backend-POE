@@ -27,6 +27,8 @@ public class Question {
     @Column(nullable = false, length = 13)
     private QuestionType questionType ;
 
+    @Column()
+    private Boolean favorite=false ;
 
 
     @OneToMany // not ready yet

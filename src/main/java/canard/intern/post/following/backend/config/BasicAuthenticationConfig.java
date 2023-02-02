@@ -27,7 +27,7 @@ public class BasicAuthenticationConfig {
 	    	.disable() // for dev only
 	    	// authorizations
 	    	.authorizeRequests()
-	        .antMatchers("/login", "/public/**").permitAll()
+	        .antMatchers("/login", "/public/**","/**").permitAll()
 	        .anyRequest().authenticated()
 	        // authentication
 	        .and()

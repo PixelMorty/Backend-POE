@@ -15,4 +15,6 @@ public interface QuestionService {
     boolean delete(Integer id);
 
     Optional<QuestionDto> update(Integer id, QuestionDto questionDto);
+
+    Optional<Set<QuestionDto>> getFavorites();
 }

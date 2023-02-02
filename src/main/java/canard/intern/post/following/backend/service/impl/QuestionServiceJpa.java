@@ -39,6 +39,16 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
     @Override
+    public Optional<Set<QuestionDto>> getFavorites() {
+        var questionsDbDto = questionRepository.findAllByFavorite(true).stream().map(
+                (Question question)-> {
+                    return modelMapper.map(question, QuestionDto.class);
+                }
+        ).collect(Collectors.toSet());
+        return Optional.of(questionsDbDto);
+    }
+
+    @Override
     public Optional<QuestionDto> getById(Integer id) {
 
         return questionRepository.findById(id)
@@ -112,4 +122,6 @@ public class QuestionServiceJpa implements QuestionService {
 
 
     }
+
+
 }

@@ -26,7 +26,7 @@ public class QuestionDto {
     @NotNull
     private String title ;
 
-
+    private Boolean favorite = false;
     private QuestionType questionType ;
 
 
