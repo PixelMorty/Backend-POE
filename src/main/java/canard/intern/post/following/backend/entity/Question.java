@@ -4,6 +4,7 @@ import canard.intern.post.following.backend.enums.QuestionType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -31,7 +32,7 @@ public class Question {
     private Boolean favorite=false ;
 
 
-    @OneToMany // not ready yet
+    @OneToMany(fetch = FetchType.EAGER) // not ready yet
     @JoinColumn(name = "question_id")
     @Cascade({ org.hibernate.annotations.CascadeType.ALL})
     private Set<Choice> choices = new HashSet<>();
